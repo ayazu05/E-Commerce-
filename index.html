@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeeStyle | Premium T-Shirt Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #111827;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --bg: #f9fafb;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+
+        .nav-actions { display: flex; gap: 1.5rem; align-items: center; }
+        .cart-btn { position: relative; cursor: pointer; font-size: 1.2rem; }
+        .cart-badge {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--accent); color: white;
+            font-size: 0.7rem; font-weight: bold;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Hero */
+        .hero {
+            max-width: 1400px; margin: 2rem auto; padding: 0 2rem;
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .hero-banner h1 { font-size: 3rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
+        .hero-banner p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin-bottom: 2rem; }
+        .hero-btn {
+            background: white; color: var(--accent);
+            padding: 1rem 2.5rem; border-radius: 50px;
+            text-decoration: none; font-weight: 700;
+            display: inline-block; transition: transform 0.3s;
+        }
+        .hero-btn:hover { transform: translateY(-3px); }
+
+        /* Products Grid */
+        .section-title {
+            max-width: 1400px; margin: 3rem auto 1.5rem; padding: 0 2rem;
+            font-size: 2rem; font-weight: 700; letter-spacing: -0.5px;
+        }
+
+        .products-grid {
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-image-wrap {
+            position: relative;
+            height: 320px;
+            background: #f3f4f6;
+            overflow: hidden;
+        }
+
+        .card-image-wrap img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .card-image-wrap img { transform: scale(1.08); }
+
+        .badge {
+            position: absolute; top: 15px; left: 15px;
+            background: var(--primary); color: white;
+            padding: 0.4rem 1rem; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+        }
+
+        .card-details { padding: 1.5rem; }
+        .card-category { font-size: 0.8rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--primary); }
+        
+        .stars { color: #fbbf24; font-size: 0.9rem; margin-bottom: 1rem; }
+        .stars span { color: var(--text-light); font-size: 0.8rem; margin-left: 0.5rem; }
+
+        .card-price { display: flex; align-items: baseline; gap: 0.75rem; }
+        .price { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+        .old-price { font-size: 1rem; color: var(--text-light); text-decoration: line-through; }
+        .discount { font-size: 0.85rem; color: var(--success); font-weight: 600; }
+
+        .view-btn {
+            width: 100%; margin-top: 1rem; padding: 0.8rem;
+            background: var(--primary); color: white;
+            border: none; border-radius: 12px;
+            font-weight: 600; cursor: pointer;
+            transition: background 0.3s;
+        }
+        .view-btn:hover { background: var(--accent); }
+
+        /* Detail Page Overlay (Full Screen) */
+        .detail-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+            z-index: 1000; opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .detail-overlay.active { opacity: 1; visibility: visible; }
+
+        .detail-page {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
+            background: white; z-index: 1001;
+            transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            overflow-y: auto;
+        }
+
+        .detail-overlay.active .detail-page { right: 0; }
+
+        .close-btn {
+            position: absolute; top: 2rem; right: 2rem; z-index: 10;
+            background: white; border: none; width: 45px; height: 45px;
+            border-radius: 50%; font-size: 1.5rem; cursor: pointer;
+            box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s;
+        }
+        .close-btn:hover { transform: rotate(90deg); }
+
+        .detail-container {
+            max-width: 1200px; margin: 0 auto; padding: 4rem 2rem 2rem;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+        }
+
+        /* Detail Image & Color Switcher */
+        .detail-image-section { position: relative; }
+        .main-image-wrap {
+            position: relative; width: 100%; aspect-ratio: 1;
+            background: #f3f4f6; border-radius: 24px; overflow: hidden;
+        }
+        .main-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .color-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            mix-blend-mode: multiply; opacity: 0.7;
+            transition: background-color 0.4s ease;
+            pointer-events: none;
+        }
+
+        .color-selector {
+            display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center;
+        }
+        .color-dot {
+            width: 35px; height: 35px; border-radius: 50%;
+            cursor: pointer; border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--border);
+            transition: all 0.3s;
+        }
+        .color-dot.active { box-shadow: 0 0 0 3px var(--accent); transform: scale(1.1); }
+
+        /* Detail Info */
+        .detail-info { padding-top: 1rem; }
+        .detail-category { color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+        .detail-title { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0 1rem; letter-spacing: -1px; line-height: 1.1; }
+        
+        .detail-rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .detail-rating .stars { font-size: 1.1rem; margin: 0; }
+        
+        .detail-price-wrap { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .detail-price { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+        .detail-old-price { font-size: 1.3rem; color: var(--text-light); text-decoration: line-through; }
+        .detail-discount { background: #d1fae5; color: #065f46; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+
+        .detail-desc { color: var(--text-light); line-height: 1.6; margin-bottom: 2rem; font-size: 1.05rem; }
+
+        .option-label { font-weight: 700; margin-bottom: 1rem; display: block; font-size: 1.1rem; }
+        
+        .size-selector { display: flex; gap: 0.75rem; margin-bottom: 2rem; }
+        .size-box {
+            width: 50px; height: 50px; border: 2px solid var(--border);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-weight: 600; cursor: pointer; transition: all 0.3s;
+        }
+        .size-box:hover { border-color: var(--primary); }
+        .size-box.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .add-cart-btn {
+            width: 100%; padding: 1.2rem;
+            background: var(--accent); color: white;
+            border: none; border-radius: 16px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+        }
+        .add-cart-btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+        @media (max-width: 900px) {
+            .detail-container { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .hero-banner h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Tee<span>Style</span></div>
+            <div class="nav-actions">
+                <div class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-banner">
+            <h1>Elevate Your Everyday Style</h1>
+            <p>Discover our premium collection of ultra-soft, perfectly fitted t-shirts designed for the modern individual.</p>
+            <a href="#products" class="hero-btn">Shop Collection</a>
+        </div>
+    </section>
+
+    <h2 class="section-title">Trending Now</h2>
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- Full Screen Detail Page Overlay -->
+    <div class="detail-overlay" id="detailOverlay">
+        <div class="detail-page">
+            <button class="close-btn" onclick="closeDetail()"><i class="fas fa-times"></i></button>
+            <div class="detail-container">
+                <div class="detail-image-section">
+                    <div class="main-image-wrap">
+                        <img id="detailImage" src="" alt="Product">
+                        <div class="color-overlay" id="colorOverlay"></div>
+                    </div>
+                    <div class="color-selector" id="colorSelector"></div>
+                </div>
+                <div class="detail-info">
+                    <div class="detail-category" id="detailCategory"></div>
+                    <h1 class="detail-title" id="detailTitle"></h1>
+                    <div class="detail-rating">
+                        <div class="stars" id="detailStars"></div>
+                        <span id="detailReviews" style="color: var(--text-light); font-size: 0.9rem;"></span>
+                    </div>
+                    <div class="detail-price-wrap">
+                        <span class="detail-price" id="detailPrice"></span>
+                        <span class="detail-old-price" id="detailOldPrice"></span>
+                        <span class="detail-discount" id="detailDiscount"></span>
+                    </div>
+                    <p class="detail-desc" id="detailDesc"></p>
+                    
+                    <span class="option-label">Select Color</span>
+                    <div class="color-selector" id="detailColorDots"></div>
+                    
+                    <span class="option-label" style="margin-top: 1.5rem;">Select Size</span>
+                    <div class="size-selector" id="detailSizes"></div>
+
+                    <button class="add-cart-btn" onclick="addToCart()">
+                        <i class="fas fa-shopping-bag"></i> Add to Cart - <span id="btnPrice"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1, name: "Classic White Cotton Tee", category: "Casual",
+                price: 599, oldPrice: 999, rating: 4.5, reviews: 128,
+                image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
+                badge: "Best Seller", sizes: ["S", "M", "L", "XL"],
+                colors: [{name: "White", hex: "#ffffff"}, {name: "Black", hex: "#1f2937"}, {name: "Navy", hex: "#1e3a8a"}],
+                desc: "Crafted from 100% organic cotton, this classic tee offers unparalleled comfort and breathability for everyday wear."
+            },
+            {
+                id: 2, name: "Premium Black Polo", category: "Premium",
+                price: 1299, oldPrice: 1999, rating: 4.8, reviews: 96,
+                image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d7e?w=600",
+                badge: "Premium", sizes: ["M", "L", "XL"],
+                colors: [{name: "Black", hex: "#1f2937"}, {name: "Charcoal", hex: "#374151"}, {name: "Burgundy", hex: "#7f1d1d"}],
+                desc: "Elevate your wardrobe with our premium polo. Features a tailored fit and moisture-wicking fabric."
+            },
+            {
+                id: 3, name: "Sports Performance Tee", category: "Sports",
+                price: 899, oldPrice: 1499, rating: 4.6, reviews: 215,
+                image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600",
+                badge: "Hot", sizes: ["S", "M", "L", "XL"],
+                colors: [{name: "Red", hex: "#dc2626"}, {name: "Blue", hex: "#2563eb"}, {name: "Green", hex: "#16a34a"}],
+                desc: "Engineered for athletes. Lightweight, quick-dry fabric keeps you cool during intense workouts."
+            },
+            {
+                id: 4, name: "Oversized Street Style", category: "Oversized",
+                price: 999, oldPrice: 1599, rating: 4.7, reviews: 184,
+                image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600",
+                badge: "Trending", sizes: ["M", "L", "XL"],
+                colors: [{name: "Beige", hex: "#d6d3d1"}, {name: "Olive", hex: "#4d7c0f"}, {name: "Black", hex: "#1f2937"}],
+                desc: "The ultimate streetwear staple. Relaxed fit with dropped shoulders for that effortless urban look."
+            },
+            {
+                id: 5, name: "Vintage Graphic Tee", category: "Casual",
+                price: 699, oldPrice: 1199, rating: 4.4, reviews: 167,
+                image: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=600",
+                badge: null, sizes: ["S", "M", "L", "XL"],
+                colors: [{name: "Grey", hex: "#9ca3af"}, {name: "White", hex: "#ffffff"}, {name: "Black", hex: "#1f2937"}],
+                desc: "Retro-inspired graphics on a soft, pre-shrunk cotton blend. A timeless addition to your casual rotation."
+            },
+            {
+                id: 6, name: "Luxury Silk Blend Tee", category: "Premium",
+                price: 1899, oldPrice: 2999, rating: 4.9, reviews: 73,
+                image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600",
+                badge: "Luxury", sizes: ["M", "L", "XL"],
+                colors: [{name: "Cream", hex: "#fef3c7"}, {name: "Midnight", hex: "#111827"}, {name: "Teal", hex: "#0f766e"}],
+                desc: "Experience the perfect blend of silk and cotton. Ultra-soft, breathable, and exudes understated elegance."
+            }
+        ];
+
+        let cartCount = 0;
+        let currentProduct = null;
+        let selectedColor = null;
+        let selectedSize = null;
+
+        // Render Products
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(p => {
+                const discount = Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100);
+                const stars = getStars(p.rating);
+                return `
+                    <div class="product-card" onclick="openDetail(${p.id})">
+                        <div class="card-image-wrap">
+                            ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+                            <img src="${p.image}" alt="${p.name}">
+                        </div>
+                        <div class="card-details">
+                            <div class="card-category">${p.category}</div>
+                            <h3 class="card-title">${p.name}</h3>
+                            <div class="stars">${stars} <span>(${p.reviews})</span></div>
+                            <div class="card-price">
+                                <span class="price">${p.price}</span>
+                                <span class="old-price">₹${p.oldPrice}</span>
+                                <span class="discount">${discount}% OFF</span>
+                            </div>
+                            <button class="view-btn">View Details</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getStars(rating) {
+            let s = '';
+            for(let i=1; i<=5; i++) {
+                if(i <= rating) s += '<i class="fas fa-star"></i>';
+                else if(i - 0.5 <= rating) s += '<i class="fas fa-star-half-alt"></i>';
+                else s += '<i class="far fa-star"></i>';
+            }
+            return s;
+        }
+
+        // Open Detail Page
+        function openDetail(id) {
+            currentProduct = products.find(p => p.id === id);
+            selectedColor = currentProduct.colors[0];
+            selectedSize = currentProduct.sizes[0];
+
+            document.getElementById('detailImage').src = currentProduct.image;
+            document.getElementById('detailCategory').textContent = currentProduct.category;
+            document.getElementById('detailTitle').textContent = currentProduct.name;
+            document.getElementById('detailStars').innerHTML = getStars(currentProduct.rating);
+            document.getElementById('detailReviews').textContent = `(${currentProduct.reviews} reviews)`;
+            document.getElementById('detailPrice').textContent = `₹${currentProduct.price}`;
+            document.getElementById('detailOldPrice').textContent = `₹${currentProduct.oldPrice}`;
+            document.getElementById('detailDiscount').textContent = `${Math.round(((currentProduct.oldPrice - currentProduct.price) / currentProduct.oldPrice) * 100)}% OFF`;
+            document.getElementById('detailDesc').textContent = currentProduct.desc;
+            document.getElementById('btnPrice').textContent = `₹${currentProduct.price}`;
+
+            // Render Colors
+            const colorDots = document.getElementById('detailColorDots');
+            colorDots.innerHTML = currentProduct.colors.map((c, i) => `
+                <div class="color-dot ${i===0?'active':''}" 
+                     style="background: ${c.hex}; ${c.hex==='#ffffff'?'border:1px solid #ddd;':''}" 
+                     onclick="changeColor('${c.hex}', this)" title="${c.name}"></div>
+            `).join('');
+            updateOverlay(selectedColor.hex);
+
+            // Render Sizes
+            const sizes = document.getElementById('detailSizes');
+            sizes.innerHTML = currentProduct.sizes.map((s, i) => `
+                <div class="size-box ${i===0?'active':''}" onclick="selectSize('${s}', this)">${s}</div>
+            `).join('');
+
+            document.getElementById('detailOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetail() {
+            document.getElementById('detailOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Change Color
+        function changeColor(hex, el) {
+            selectedColor = { hex: hex };
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            el.classList.add('active');
+            updateOverlay(hex);
+        }
+
+        function updateOverlay(hex) {
+            const overlay = document.getElementById('colorOverlay');
+            // If white, make overlay transparent so original image shows
+            overlay.style.backgroundColor = hex === '#ffffff' ? 'transparent' : hex;
+            overlay.style.opacity = hex === '#ffffff' ? '0' : '0.6';
+        }
+
+        // Select Size
+        function selectSize(size, el) {
+            selectedSize = size;
+            document.querySelectorAll('.size-box').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Add to Cart
+        function addToCart() {
+            if(!selectedSize) { alert('Please select a size'); return; }
+            cartCount++;
+            document.getElementById('cartCount').textContent = cartCount;
+            
+            // Animation
+            const btn = document.querySelector('.add-cart-btn');
+            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
+            btn.style.background = 'var(--success)';
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fas fa-shopping-bag"></i> Add to Cart - <span id="btnPrice">₹${currentProduct.price}</span>`;
+                btn.style.background = 'var(--accent)';
+            }, 1500);
+        }
+
+        // Close overlay on background click
+        document.getElementById('detailOverlay').addEventListener('click', (e) => {
+            if(e.target.id === 'detailOverlay') closeDetail();
+        });
+
+        renderProducts();
+    </script>
+</body>
+</html>
